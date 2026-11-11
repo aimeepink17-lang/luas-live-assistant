@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Luas Live Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="App navigation">
+      <a class="brand" href="/" aria-label="Luas Live Assistant home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+        <span class="brand-copy"><strong>luas<span>live</span></strong><small>TRAVEL ASSISTANT</small></span>
+      </a>
+      <div class="sidebar-section-label">YOUR ASSISTANT</div>
+      <button class="nav-item selected" type="button"><span class="nav-icon">✳</span> Live departures</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">NETWORK STATUS</div>
+      <div class="line-status"><span class="line-dot red"></span><span><strong>Red Line</strong><small>Live forecasts</small></span><span class="status-indicator" aria-hidden="true"></span></div>
+      <div class="line-status"><span class="line-dot green"></span><span><strong>Green Line</strong><small>Live forecasts</small></span><span class="status-indicator" aria-hidden="true"></span></div>
+      <div class="sidebar-footer"><span class="privacy-icon">◈</span><span>Powered by official<br>Transport for Ireland data</span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><span class="eyebrow">DUBLIN LIGHT RAIL</span><h1>Live departures</h1></div>
+        <div class="topbar-right"><span class="live-badge"><i></i> OFFICIAL API</span><button id="refresh-button" class="refresh-button" type="button" aria-label="Refresh forecast"><span class="refresh-icon">↻</span><span>Refresh</span></button></div>
+      </header>
+
+      <section class="content-wrap">
+        <div class="welcome-row">
+          <div><p class="welcome-kicker">YOUR JOURNEY, AT A GLANCE</p><h2>Where are you heading?</h2><p class="welcome-copy">Ask about the next tram, or choose a stop to see live departures.</p></div>
+          <div class="tram-art" aria-hidden="true"><span class="tram-track"></span><span class="tram-body"><i></i><i></i><i></i></span></div>
+        </div>
+
+        <section class="chat-card" aria-label="Luas travel assistant">
+          <div class="chat-header"><div class="assistant-avatar">✳</div><div><strong>Luas Assistant</strong><small><span class="online-dot"></span> Official Luas forecasts</small></div><span class="header-menu" aria-hidden="true">•••</span></div>
+          <div id="conversation" class="conversation" aria-live="polite">
+            <div class="message assistant-message"><div class="message-avatar">✳</div><div class="message-content"><div class="bubble">Hi there! I can check live Luas departures for any stop. Where would you like to travel from?</div><span class="message-time">Ready when you are</span></div></div>
+            <div class="suggestions" aria-label="Suggested questions"><button type="button" class="suggestion" data-question="When is the next tram from Ranelagh?">When is the next tram from Ranelagh?</button><button type="button" class="suggestion" data-question="Show departures from Abbey Street">Show departures from Abbey Street</button></div>
+          </div>
+          <form id="question-form" class="composer">
+            <label class="sr-only" for="question-input">Ask about a Luas stop</label><span class="composer-sparkle" aria-hidden="true">✳</span><input id="question-input" type="text" placeholder="Ask about a stop… e.g. Next tram from Ranelagh" autocomplete="off"><button class="send-button" type="submit" aria-label="Send question">↑</button>
+          </form>
+          <div class="composer-hint">Try asking about a stop on the Red or Green Line</div>
+        </section>
+
+        <section class="departures-section" aria-labelledby="departures-title">
+          <div class="section-heading"><div><span class="eyebrow">AT YOUR STOP</span><h2 id="departures-title">Live departures</h2></div><label class="select-wrap"><span class="sr-only">Select a Luas stop</span><select id="stop-select"><option value="">Loading stops…</option></select><span aria-hidden="true">⌄</span></label></div>
+          <div id="forecast-panel" class="forecast-panel"><div class="empty-state"><span class="empty-icon">⌖</span><div><strong>Choose a stop to get started</strong><p>Live destination and arrival forecasts will appear here.</p></div></div></div>
+          <div class="updated-row"><span class="updated-dot"></span><span id="updated-label">No forecast loaded yet</span><span class="data-source">Data provided by TII · CC BY 4.0</span></div>
+        </section>
+        <footer class="page-footer">Luas Live Assistant <span>·</span> Real-time information from Transport Infrastructure Ireland</footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
