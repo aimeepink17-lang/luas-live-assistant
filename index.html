@@ -3,62 +3,365 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f7fb">
-  <title>Luas Live Assistant</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
-  <script src="/script.js" defer></script>
+  <meta name="theme-color" content="#091525">
+  <meta name="description" content="myLUAS — real-time Luas arrivals for Dublin's Red and Green Lines.">
+  <title>myLUAS — Live departures</title>
+  <style>
+    :root{color-scheme:light;--navy:#091525;--navy-2:#102139;--navy-3:#172b45;--ink:#172439;--muted:#728096;--muted-2:#9aa6b8;--paper:#fff;--canvas:#f2f5f9;--line:#e8edf3;--red:#d94b53;--red-pale:#fff0f0;--green:#218260;--green-bright:#34a878;--green-pale:#eaf6ef;--blue:#5269d8;--shadow:0 20px 60px #05102022;font-family:Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-synthesis:none;text-rendering:optimizeLegibility}*{box-sizing:border-box}body{margin:0;min-width:320px;background:var(--canvas);color:var(--ink)}button,select{font:inherit}.app{min-height:100vh}.hero-shell{position:relative;overflow:hidden;background:radial-gradient(ellipse at 85% 18%,#1c3a57 0,transparent 35%),linear-gradient(130deg,#081424 0%,#0c1b2d 58%,#10233a 100%);color:#f7f9fc;padding:0 22px 120px}.hero-shell:after{content:"";position:absolute;right:-110px;bottom:-214px;width:560px;height:410px;border:1px solid #d9e5f20e;border-radius:50%;box-shadow:0 0 0 44px #d9e5f208,0 0 0 90px #d9e5f206,0 0 0 140px #d9e5f204;pointer-events:none}.topbar{height:76px;max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;border-bottom:1px solid #ffffff16}.brand{display:flex;gap:11px;align-items:center;color:inherit;text-decoration:none}.brand-mark{width:36px;height:36px;display:flex;align-items:center;justify-content:center;gap:3px;border:1px solid #ffffff32;border-radius:11px;background:#ffffff0a}.brand-mark i{display:block;width:4px;border-radius:5px;background:#f3f6fb;height:17px}.brand-mark i:nth-child(2){height:12px;opacity:.72}.brand-mark i:nth-child(3){height:8px;opacity:.5}.brand-name{font-size:17px;font-weight:800;letter-spacing:-.8px}.brand-name span{color:#81d5ad}.brand-sub{color:#99a8bb;font-size:8px;letter-spacing:1.55px;font-weight:700;margin-top:3px}.brand-copy{display:flex;flex-direction:column}.top-right{display:flex;align-items:center;gap:12px}.network-state{display:flex;align-items:center;gap:7px;color:#c8d3e0;font-size:10px;font-weight:600}.state-dot{display:block;width:7px;height:7px;border-radius:50%;background:#44c18a;box-shadow:0 0 0 4px #44c18a20}.network-state.is-loading .state-dot{background:#e8b455;box-shadow:0 0 0 4px #e8b45520;animation:pulse 1.2s infinite}.network-state.is-error .state-dot{background:#e76870;box-shadow:0 0 0 4px #e7687020}@keyframes pulse{50%{opacity:.35}}.hero-content{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:46px 0 0;display:flex;align-items:flex-end;justify-content:space-between;gap:25px}.hero-kicker{color:#8ad7b3;font-size:9px;letter-spacing:1.8px;font-weight:750}.hero-content h1{font-size:clamp(31px,5vw,52px);line-height:1.06;letter-spacing:-2.4px;margin:13px 0 12px;font-weight:760}.hero-content h1 span{color:#aebbd0}.hero-content p{max-width:490px;color:#b1bdcc;font-size:13px;line-height:1.65;margin:0}.hero-art{flex:none;width:200px;height:103px;position:relative;margin:0 35px 3px 0;opacity:.92}.track{position:absolute;left:8px;right:4px;top:53px;height:2px;background:linear-gradient(90deg,#d84b5480,#d84b54 40%,#33a777 60%,#33a77780);transform:rotate(-13deg);border-radius:10px}.track:after{content:"";position:absolute;inset:-7px 0;border-top:1px dashed #d5dfeb55;border-bottom:1px dashed #d5dfeb55}.track-stop{position:absolute;top:46px;width:14px;height:14px;border-radius:50%;background:#142942;border:3px solid #e8eef6;box-shadow:0 0 0 4px #ffffff12}.track-stop.one{left:28px}.track-stop.two{left:91px;top:31px;border-color:#df5a61}.track-stop.three{right:20px;top:15px;border-color:#42b988}.mini-tram{position:absolute;top:42px;right:51px;color:#fff;font-size:19px;transform:rotate(-13deg);text-shadow:0 3px 14px #fff8}.main-wrap{max-width:1160px;margin:-76px auto 0;padding:0 22px 30px;position:relative;z-index:2}.dashboard{display:grid;grid-template-columns:minmax(255px,.78fr) minmax(0,1.7fr);gap:16px;align-items:start}.card{background:var(--paper);border:1px solid #e6ebf1;border-radius:17px;box-shadow:var(--shadow)}.station-card{padding:21px 20px 18px}.card-kicker{font-size:9px;letter-spacing:1.4px;font-weight:750;color:#919daf}.station-title-row{display:flex;justify-content:space-between;align-items:flex-start;margin:8px 0 17px}.station-title-row h2{font-size:19px;letter-spacing:-.5px;margin:0;font-weight:740}.line-pill{font-size:8px;letter-spacing:.5px;font-weight:750;padding:6px 8px;border-radius:20px;text-transform:uppercase;white-space:nowrap}.line-pill.red{color:#b64047;background:var(--red-pale)}.line-pill.green{color:#1d7956;background:var(--green-pale)}.field-label{display:flex;align-items:center;gap:7px;color:#8793a4;font-size:8px;letter-spacing:1.25px;font-weight:750;margin:0 0 7px}.field-label:before{content:"";height:6px;width:6px;border-radius:50%;background:#6574da}.select-frame{position:relative}.stop-select{appearance:none;width:100%;height:46px;border:1px solid #dfe5ed;border-radius:10px;background:#fff;color:#243249;padding:0 38px 0 12px;font-size:12px;font-weight:650;outline:0;cursor:pointer}.stop-select:focus{border-color:#8290e0;box-shadow:0 0 0 3px #6373d91c}.select-chevron{pointer-events:none;position:absolute;right:13px;top:13px;color:#8090a2;font-size:16px}.station-meta{display:flex;justify-content:space-between;gap:8px;margin-top:13px;color:#909bad;font-size:9px}.station-code{font-weight:750;letter-spacing:.8px;color:#657187}.service-message{margin-top:17px;min-height:48px;padding:10px 11px;display:flex;gap:9px;align-items:flex-start;border-radius:10px;background:#f3f6f9;color:#617087;font-size:10px;line-height:1.45}.service-icon{width:17px;height:17px;border-radius:50%;display:grid;place-items:center;flex:none;background:#e5ebf3;color:#56657a;font-size:10px;font-weight:800}.service-message.is-normal{background:#eff8f2;color:#397458}.service-message.is-normal .service-icon{background:#d9efdf;color:#2c855d}.service-message.is-alert{background:#fff4e7;color:#8c5e23}.service-message.is-alert .service-icon{background:#ffe7c7;color:#9c671f}.forecast-card{padding:21px 21px 18px;min-height:273px}.forecast-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-bottom:15px;border-bottom:1px solid var(--line)}.forecast-head h2{font-size:18px;letter-spacing:-.45px;margin:6px 0 0;font-weight:740}.forecast-head p{font-size:9px;color:#919bad;margin:5px 0 0}.refresh-button{height:36px;padding:0 11px;display:flex;align-items:center;gap:7px;border:1px solid #e2e7ee;border-radius:9px;background:#fff;color:#45536a;font-size:9px;font-weight:700;white-space:nowrap;cursor:pointer;transition:.15s ease}.refresh-button:hover{border-color:#b4bee9;color:#5264cf;background:#fafaff}.refresh-button:disabled{opacity:.6;cursor:wait}.refresh-symbol{font-size:17px;line-height:1}.refresh-button.is-loading .refresh-symbol{animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.direction-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:14px}.direction-card{border:1px solid #ebeff4;border-radius:12px;overflow:hidden;min-width:0}.direction-heading{display:flex;align-items:center;gap:8px;padding:11px 11px 10px;background:#fafbfd;border-bottom:1px solid #edf0f4}.direction-icon{height:26px;width:26px;display:grid;place-items:center;border-radius:8px;color:#5365cd;background:#edf0ff;font-size:14px}.direction-heading strong{font-size:10px;font-weight:750}.tram-count{margin-left:auto;font-size:8px;color:#9aa4b1}.tram-list{list-style:none;margin:0;padding:0}.tram-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;min-height:59px;padding:9px 11px;border-bottom:1px solid #f0f2f5}.tram-row:last-child{border-bottom:0}.tram-destination{font-size:10px;font-weight:680;color:#35445b;line-height:1.35;overflow-wrap:anywhere}.tram-route-label{color:#9ba5b3;font-size:8px;margin-top:4px}.tram-due{min-width:49px;text-align:right;font-size:21px;font-weight:780;letter-spacing:-.8px;line-height:1;color:#182941}.tram-due.is-due{font-size:13px;letter-spacing:-.2px;color:#218260}.tram-due small{display:block;font-size:8px;letter-spacing:.15px;font-weight:600;color:#98a3b2;margin-top:4px}.direction-empty{padding:22px 11px;color:#939eac;text-align:center;font-size:9px;line-height:1.5;min-height:78px}.error-banner{display:none;margin:0 0 14px;padding:11px 13px;border:1px solid #f2c9cc;border-radius:10px;background:#fff0f1;color:#9c333c;font-size:10px;line-height:1.5}.error-banner.is-visible{display:flex;align-items:flex-start;gap:8px}.error-banner strong{font-weight:750}.error-symbol{height:17px;width:17px;display:grid;place-items:center;border-radius:50%;background:#f8d9db;color:#a23c44;font-weight:800;flex:none}.loading-box,.empty-box{grid-column:1/-1;min-height:168px;border:1px dashed #dfe5ed;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#8290a2;padding:20px}.loading-spinner{width:22px;height:22px;border:2px solid #e4e9f1;border-top-color:#5369d8;border-radius:50%;animation:spin .85s linear infinite;margin-bottom:11px}.loading-box strong,.empty-box strong{font-size:11px;color:#536176}.loading-box p,.empty-box p{font-size:9px;margin:5px 0 0}.below-grid{display:grid;grid-template-columns:minmax(255px,.78fr) minmax(0,1.7fr);gap:16px;margin-top:15px}.info-card{grid-column:2;padding:15px 19px;display:flex;align-items:center;justify-content:space-between;gap:15px}.info-item{display:flex;flex-direction:column;gap:5px}.info-label{color:#99a3b1;font-size:8px;letter-spacing:1.2px;font-weight:750}.info-value{color:#46556b;font-size:10px;font-weight:650}.auto-note{display:flex;align-items:center;gap:7px;color:#8793a4;font-size:9px;white-space:nowrap}.auto-note i{height:6px;width:6px;background:#43aa78;border-radius:50%}.footer{max-width:1160px;margin:0 auto;padding:4px 22px 24px;display:flex;justify-content:space-between;gap:12px;color:#8390a2;font-size:9px}.footer-brand{color:#46556b;font-weight:700}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:780px){.hero-shell{padding:0 18px 105px}.topbar{height:67px}.hero-content{padding-top:36px}.hero-art{width:145px;margin-right:7px;transform:scale(.82);transform-origin:right bottom}.main-wrap{padding:0 18px 24px}.dashboard{grid-template-columns:minmax(220px,.78fr) minmax(0,1.4fr);gap:11px}.station-card,.forecast-card{padding:17px 15px}.direction-grid{gap:8px}.tram-row{padding:9px 8px}.below-grid{grid-template-columns:minmax(220px,.78fr) minmax(0,1.4fr);gap:11px}.footer{padding-left:18px;padding-right:18px}}@media(max-width:620px){.hero-shell{padding:0 15px 99px}.topbar{height:63px}.brand-mark{width:32px;height:32px}.brand-name{font-size:16px}.network-state{font-size:9px}.hero-content{padding:35px 0 0;min-height:192px;align-items:flex-start}.hero-content h1{font-size:35px;letter-spacing:-1.8px;margin-top:12px}.hero-content p{font-size:11px;max-width:300px}.hero-art{position:absolute;right:0;bottom:5px;transform:scale(.63);transform-origin:right bottom;opacity:.7}.main-wrap{padding:0 12px 20px;margin-top:-65px}.dashboard{grid-template-columns:1fr;gap:11px}.station-card{padding:16px}.station-title-row{margin:7px 0 13px}.station-title-row h2{font-size:18px}.service-message{margin-top:13px}.forecast-card{padding:16px 12px 13px}.forecast-head h2{font-size:16px}.forecast-head p{font-size:8px}.refresh-button{height:34px;padding:0 9px;font-size:8px}.direction-grid{gap:8px;padding-top:11px}.direction-heading{padding:9px 7px;gap:6px}.direction-icon{width:23px;height:23px}.direction-heading strong{font-size:9px}.tram-count{font-size:7px}.tram-row{min-height:58px;padding:8px 7px;grid-template-columns:minmax(0,1fr) auto;gap:4px}.tram-destination{font-size:9px}.tram-due{font-size:19px;min-width:43px}.tram-due small{font-size:7px}.below-grid{display:block;margin-top:11px}.info-card{padding:12px 14px;gap:8px}.info-label{font-size:7px}.info-value{font-size:9px}.auto-note{font-size:8px}.footer{padding:4px 14px 18px;font-size:8px;flex-direction:column}.error-banner{font-size:9px}}@media(max-width:370px){.hero-content h1{font-size:31px}.hero-content p{max-width:245px}.direction-grid{grid-template-columns:1fr}.tram-row{min-height:54px;padding:9px 11px}.tram-destination{font-size:10px}.tram-due{font-size:21px}.direction-heading{padding:10px 11px}.direction-heading strong{font-size:10px}.tram-count{font-size:8px}}
+  </style>
+  <style>
+    .filter-block{margin:0 0 13px}.filter-label{display:block;margin:0 0 7px;color:#8793a4;font-size:8px;letter-spacing:1.15px;font-weight:750}.filter-tabs{display:flex;gap:5px;padding:4px;border:1px solid #e7ebf1;background:#f5f7fa;border-radius:10px}.filter-tab{flex:1;min-height:34px;padding:0 8px;border:0;border-radius:7px;background:transparent;color:#66748a;font-size:10px;font-weight:700;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}.filter-tab:hover{background:#fff;color:#27364b}.filter-tab[aria-pressed="true"]{background:#fff;color:#243249;box-shadow:0 1px 4px #12223b1a}.filter-tab[data-line-filter="red"][aria-pressed="true"]{color:#b64047}.filter-tab[data-line-filter="green"][aria-pressed="true"]{color:#1d7956}.direction-filter{display:flex;align-items:center;gap:8px;padding-top:12px}.direction-filter .filter-label{margin:0 auto 0 0}.direction-filter .filter-tabs{width:min(245px,70%)}.direction-card.is-filtered-out{display:none}.filter-hint{margin:7px 1px 0;color:#8995a5;font-size:9px;min-height:13px}@media(max-width:620px){.direction-filter{align-items:flex-start;flex-direction:column;gap:7px}.direction-filter .filter-tabs{width:100%}.filter-tab{min-height:38px}}
+  </style>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar" aria-label="App navigation">
-      <a class="brand" href="/" aria-label="Luas Live Assistant home">
-        <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
-        <span class="brand-copy"><strong>luas<span>live</span></strong><small>TRAVEL ASSISTANT</small></span>
-      </a>
-      <div class="sidebar-section-label">YOUR ASSISTANT</div>
-      <button class="nav-item selected" type="button"><span class="nav-icon">✳</span> Live departures</button>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section-label">NETWORK STATUS</div>
-      <div class="line-status"><span class="line-dot red"></span><span><strong>Red Line</strong><small>Live forecasts</small></span><span class="status-indicator" aria-hidden="true"></span></div>
-      <div class="line-status"><span class="line-dot green"></span><span><strong>Green Line</strong><small>Live forecasts</small></span><span class="status-indicator" aria-hidden="true"></span></div>
-      <div class="sidebar-footer"><span class="privacy-icon">◈</span><span>Powered by official<br>Transport for Ireland data</span></div>
-    </aside>
+  <div class="app">
+    <header class="hero-shell">
+      <nav class="topbar" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="myLUAS home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-copy"><span class="brand-name">my<span>LUAS</span></span><span class="brand-sub">DUBLIN LIGHT RAIL</span></span>
+        </a>
+        <div class="top-right"><span id="network-state" class="network-state is-loading"><i class="state-dot"></i><span id="network-label">Connecting to Luas</span></span></div>
+      </nav>
+      <div class="hero-content" id="top">
+        <div><div class="hero-kicker">LIVE NETWORK · RED + GREEN LINES</div><h1>Your next tram,<br><span>without the guesswork.</span></h1><p>Live arrival forecasts for every Luas stop, straight from the official transport feed.</p></div>
+        <div class="hero-art" aria-hidden="true"><span class="track"></span><span class="track-stop one"></span><span class="track-stop two"></span><span class="track-stop three"></span><span class="mini-tram">▰</span></div>
+      </div>
+    </header>
 
-    <main class="main-content">
-      <header class="topbar">
-        <div><span class="eyebrow">DUBLIN LIGHT RAIL</span><h1>Live departures</h1></div>
-        <div class="topbar-right"><span class="live-badge"><i></i> OFFICIAL API</span><button id="refresh-button" class="refresh-button" type="button" aria-label="Refresh forecast"><span class="refresh-icon">↻</span><span>Refresh</span></button></div>
-      </header>
-
-      <section class="content-wrap">
-        <div class="welcome-row">
-          <div><p class="welcome-kicker">YOUR JOURNEY, AT A GLANCE</p><h2>Where are you heading?</h2><p class="welcome-copy">Ask about the next tram, or choose a stop to see live departures.</p></div>
-          <div class="tram-art" aria-hidden="true"><span class="tram-track"></span><span class="tram-body"><i></i><i></i><i></i></span></div>
-        </div>
-
-        <section class="chat-card" aria-label="Luas travel assistant">
-          <div class="chat-header"><div class="assistant-avatar">✳</div><div><strong>Luas Assistant</strong><small><span class="online-dot"></span> Official Luas forecasts</small></div><span class="header-menu" aria-hidden="true">•••</span></div>
-          <div id="conversation" class="conversation" aria-live="polite">
-            <div class="message assistant-message"><div class="message-avatar">✳</div><div class="message-content"><div class="bubble">Hi there! I can check live Luas departures for any stop. Where would you like to travel from?</div><span class="message-time">Ready when you are</span></div></div>
-            <div class="suggestions" aria-label="Suggested questions"><button type="button" class="suggestion" data-question="When is the next tram from Ranelagh?">When is the next tram from Ranelagh?</button><button type="button" class="suggestion" data-question="Show departures from Abbey Street">Show departures from Abbey Street</button></div>
+    <main class="main-wrap">
+      <div id="error-banner" class="error-banner" role="alert" aria-live="assertive"><span class="error-symbol">!</span><div><strong id="error-title">Live data unavailable</strong><div id="error-message"></div></div></div>
+      <div class="dashboard">
+        <section class="card station-card" aria-labelledby="station-heading">
+          <div class="card-kicker">YOUR DEPARTURE</div>
+          <div class="station-title-row"><h2 id="station-heading">Choose a stop</h2><span id="line-pill" class="line-pill red">RED LINE</span></div>
+          <div class="filter-block" aria-label="Filter stops by Luas line">
+            <span class="filter-label">FILTER BY LINE</span>
+            <div class="filter-tabs" role="group" aria-label="Filter stops by line">
+              <button class="filter-tab" type="button" data-line-filter="all" aria-pressed="true">All stops</button>
+              <button class="filter-tab" type="button" data-line-filter="red" aria-pressed="false">Red Line</button>
+              <button class="filter-tab" type="button" data-line-filter="green" aria-pressed="false">Green Line</button>
+            </div>
           </div>
-          <form id="question-form" class="composer">
-            <label class="sr-only" for="question-input">Ask about a Luas stop</label><span class="composer-sparkle" aria-hidden="true">✳</span><input id="question-input" type="text" placeholder="Ask about a stop… e.g. Next tram from Ranelagh" autocomplete="off"><button class="send-button" type="submit" aria-label="Send question">↑</button>
-          </form>
-          <div class="composer-hint">Try asking about a stop on the Red or Green Line</div>
+          <label class="field-label" for="stop-select">LUAS STOP</label>
+          <div class="select-frame"><select id="stop-select" class="stop-select" disabled aria-describedby="stop-help"><option>Loading stops…</option></select><span class="select-chevron" aria-hidden="true">⌄</span></div>
+          <span id="stop-help" class="sr-only">Stops are grouped by Red Line and Green Line.</span>
+          <div class="station-meta"><span id="stop-code" class="station-code">—</span><span>Selection saved on this device</span></div>
+          <div id="service-message" class="service-message"><span class="service-icon">i</span><span id="service-copy">Waiting for the Luas service message…</span></div>
         </section>
 
-        <section class="departures-section" aria-labelledby="departures-title">
-          <div class="section-heading"><div><span class="eyebrow">AT YOUR STOP</span><h2 id="departures-title">Live departures</h2></div><label class="select-wrap"><span class="sr-only">Select a Luas stop</span><select id="stop-select"><option value="">Loading stops…</option></select><span aria-hidden="true">⌄</span></label></div>
-          <div id="forecast-panel" class="forecast-panel"><div class="empty-state"><span class="empty-icon">⌖</span><div><strong>Choose a stop to get started</strong><p>Live destination and arrival forecasts will appear here.</p></div></div></div>
-          <div class="updated-row"><span class="updated-dot"></span><span id="updated-label">No forecast loaded yet</span><span class="data-source">Data provided by TII · CC BY 4.0</span></div>
+        <section class="card forecast-card" aria-labelledby="forecast-heading">
+          <div class="forecast-head"><div><div class="card-kicker">UP NEXT AT YOUR STOP</div><h2 id="forecast-heading">Arrival forecasts</h2><p>The next three trams in each direction</p></div><button id="refresh-button" class="refresh-button" type="button" disabled><span class="refresh-symbol" aria-hidden="true">↻</span><span>Refresh</span></button></div>
+          <div class="direction-filter"><span class="filter-label">SHOW DIRECTION</span><div class="filter-tabs" role="group" aria-label="Filter forecasts by direction"><button class="filter-tab" type="button" data-direction-filter="both" aria-pressed="true">Both</button><button class="filter-tab" type="button" data-direction-filter="inbound" aria-pressed="false">Inbound</button><button class="filter-tab" type="button" data-direction-filter="outbound" aria-pressed="false">Outbound</button></div></div>
+          <div id="direction-grid" class="direction-grid" aria-live="polite"><div class="loading-box"><span class="loading-spinner"></span><strong>Connecting to live forecasts</strong><p>Your arrival information will appear here.</p></div></div>
         </section>
-        <footer class="page-footer">Luas Live Assistant <span>·</span> Real-time information from Transport Infrastructure Ireland</footer>
-      </section>
+      </div>
+
+      <div class="below-grid">
+        <div aria-hidden="true"></div>
+        <section class="card info-card" aria-label="Forecast update information">
+          <div class="info-item"><span class="info-label">LAST UPDATED</span><span id="last-updated" class="info-value">Waiting for first update</span></div>
+          <div class="auto-note"><i></i><span>Auto-refreshes every 20 seconds</span></div>
+        </section>
+      </div>
     </main>
+
+    <footer class="footer"><span class="footer-brand">myLUAS</span><span>Data: Transport Infrastructure Ireland. Built by Aimee for BDAIB.</span></footer>
   </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STOPS_URL = "https://luas-class.kluxy.app/stops";
+      const FORECAST_URL = "https://luas-class.kluxy.app/forecast";
+      const STORAGE_KEY = "myLUAS.selectedStop";
+      const REFRESH_MS = 20_000;
+
+      const stopSelect = document.querySelector("#stop-select");
+      const refreshButton = document.querySelector("#refresh-button");
+      const directionGrid = document.querySelector("#direction-grid");
+      const networkState = document.querySelector("#network-state");
+      const networkLabel = document.querySelector("#network-label");
+      const errorBanner = document.querySelector("#error-banner");
+      const errorTitle = document.querySelector("#error-title");
+      const errorMessage = document.querySelector("#error-message");
+      const serviceMessage = document.querySelector("#service-message");
+      const serviceCopy = document.querySelector("#service-copy");
+      const lastUpdated = document.querySelector("#last-updated");
+      const stopHeading = document.querySelector("#station-heading");
+      const stopCode = document.querySelector("#stop-code");
+      const linePill = document.querySelector("#line-pill");
+
+      let stopsById = new Map();
+      let lineGroups = new Map();
+      let activeLineFilter = "all";
+      let activeDirectionFilter = "both";
+      let requestNumber = 0;
+      let activeController = null;
+      let isLoading = false;
+
+      function setNetworkState(state, label) {
+        networkState.classList.remove("is-loading", "is-error");
+        if (state === "loading") networkState.classList.add("is-loading");
+        if (state === "error") networkState.classList.add("is-error");
+        networkLabel.textContent = label;
+      }
+
+      function showError(title, message) {
+        errorTitle.textContent = title;
+        errorMessage.textContent = message;
+        errorBanner.classList.add("is-visible");
+        setNetworkState("error", "Connection issue");
+      }
+
+      function clearError() {
+        errorBanner.classList.remove("is-visible");
+      }
+
+      function formatUpdatedTime(value) {
+        if (!value) return new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" });
+        // The API currently sends DD/MM/YYYY HH:mm:ss without a timezone.
+        const match = String(value).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+        let date = new Date(value);
+        if (match) date = new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]), Number(match[4]), Number(match[5]), Number(match[6] || 0));
+        if (Number.isNaN(date.getTime())) return String(value);
+        return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" });
+      }
+
+      function renderStops(stops) {
+        lineGroups = new Map();
+        const groups = [
+          { key: "red", label: "Red Line" },
+          { key: "green", label: "Green Line" },
+        ];
+        stopSelect.replaceChildren();
+        for (const groupInfo of groups) {
+          const groupStops = stops.filter(stop => String(stop.line).toLowerCase() === groupInfo.key);
+          if (!groupStops.length) continue;
+          const group = document.createElement("optgroup");
+          group.label = groupInfo.label;
+          group.hidden = activeLineFilter !== "all" && activeLineFilter !== groupInfo.key;
+          lineGroups.set(groupInfo.key, { element: group, stops: groupStops });
+          for (const stop of groupStops.sort((a, b) => a.name.localeCompare(b.name))) {
+            const option = document.createElement("option");
+            option.value = stop.id;
+            option.textContent = stop.name;
+            group.append(option);
+            stopsById.set(stop.id, stop);
+          }
+          stopSelect.append(group);
+        }
+        if (!stopsById.size) throw new Error("The stop list contained no Red Line or Green Line stops.");
+        let remembered = "";
+        try { remembered = localStorage.getItem(STORAGE_KEY) || ""; } catch { /* Storage may be disabled in private browsing. */ }
+        const selected = stopsById.has(remembered) ? remembered : (stopsById.has("MYS") ? "MYS" : stops[0]?.id);
+        if (!selected || !stopsById.has(selected)) throw new Error("Mayor Square - NCI (MYS) was not present in the stop list.");
+        stopSelect.value = selected;
+        stopSelect.disabled = false;
+        updateStopDetails(selected);
+      }
+
+      function updateStopDetails(id) {
+        const stop = stopsById.get(id);
+        if (!stop) return;
+        stopHeading.textContent = stop.name;
+        stopCode.textContent = stop.id;
+        const line = String(stop.line).toLowerCase();
+        linePill.textContent = `${line.toUpperCase()} LINE`;
+        linePill.classList.toggle("red", line === "red");
+        linePill.classList.toggle("green", line === "green");
+        try { localStorage.setItem(STORAGE_KEY, id); } catch { /* The app still works if storage is unavailable. */ }
+      }
+
+      function setLineFilter(line) {
+        activeLineFilter = line;
+        document.querySelectorAll("[data-line-filter]").forEach(button => {
+          button.setAttribute("aria-pressed", String(button.dataset.lineFilter === line));
+        });
+        for (const [key, group] of lineGroups) group.element.hidden = line !== "all" && line !== key;
+
+        const selectedStop = stopsById.get(stopSelect.value);
+        if (line !== "all" && selectedStop && String(selectedStop.line).toLowerCase() !== line) {
+          const firstStop = lineGroups.get(line)?.stops[0];
+          if (firstStop) {
+            stopSelect.value = firstStop.id;
+            updateStopDetails(firstStop.id);
+            loadForecast();
+          }
+        }
+      }
+
+      function setDirectionFilter(direction) {
+        activeDirectionFilter = direction;
+        document.querySelectorAll("[data-direction-filter]").forEach(button => {
+          button.setAttribute("aria-pressed", String(button.dataset.directionFilter === direction));
+        });
+        directionGrid.querySelectorAll(".direction-card").forEach(card => {
+          card.classList.toggle("is-filtered-out", direction !== "both" && card.dataset.direction !== direction);
+        });
+      }
+
+      function makeDirectionCard(direction, directionIndex) {
+        const label = String(direction.name || "Direction");
+        const icon = label.toLowerCase() === "inbound" ? "↙" : "↗";
+        const trams = Array.isArray(direction.trams)
+          ? direction.trams.filter(tram => tram && tram.destination != null && tram.due != null).slice(0, 3)
+          : [];
+        const card = document.createElement("article");
+        card.className = "direction-card";
+        card.dataset.direction = label.toLowerCase();
+        card.setAttribute("aria-label", `${label} arrivals`);
+
+        const heading = document.createElement("div");
+        heading.className = "direction-heading";
+        const iconElement = document.createElement("span");
+        iconElement.className = "direction-icon";
+        iconElement.setAttribute("aria-hidden", "true");
+        iconElement.textContent = icon;
+        const headingLabel = document.createElement("strong");
+        headingLabel.textContent = label;
+        const count = document.createElement("span");
+        count.className = "tram-count";
+        count.textContent = `${trams.length} of 3`;
+        heading.append(iconElement, headingLabel, count);
+        card.append(heading);
+
+        if (!trams.length) {
+          const empty = document.createElement("div");
+          empty.className = "direction-empty";
+          empty.textContent = "No tram forecasts were returned for this direction.";
+          card.append(empty);
+          return card;
+        }
+
+        const list = document.createElement("ol");
+        list.className = "tram-list";
+        trams.forEach((tram, index) => {
+          const row = document.createElement("li");
+          row.className = "tram-row";
+          const destination = document.createElement("div");
+          const destinationName = document.createElement("div");
+          destinationName.className = "tram-destination";
+          destinationName.textContent = String(tram.destination);
+          const routeLabel = document.createElement("div");
+          routeLabel.className = "tram-route-label";
+          routeLabel.textContent = `Next tram · ${index + 1}`;
+          destination.append(destinationName, routeLabel);
+
+          const dueBox = document.createElement("div");
+          const due = Number(tram.due);
+          const isDue = Number.isFinite(due) && due === 0;
+          dueBox.className = `tram-due${isDue ? " is-due" : ""}`;
+          dueBox.textContent = isDue ? "Due" : (tram.due == null ? "—" : String(tram.due));
+          if (!isDue && tram.due != null) {
+            const unit = document.createElement("small");
+            unit.textContent = "minutes";
+            dueBox.append(unit);
+          }
+          row.append(destination, dueBox);
+          list.append(row);
+        });
+        card.append(list);
+        return card;
+      }
+
+      function renderForecast(data) {
+        if (!Array.isArray(data.directions)) throw new Error("The forecast response did not include a directions list.");
+        const inbound = data.directions.find(direction => String(direction.name).toLowerCase() === "inbound");
+        const outbound = data.directions.find(direction => String(direction.name).toLowerCase() === "outbound");
+        if (!inbound || !outbound) throw new Error("The forecast response is missing inbound or outbound directions.");
+
+        directionGrid.replaceChildren(makeDirectionCard(inbound, 0), makeDirectionCard(outbound, 1));
+        setDirectionFilter(activeDirectionFilter);
+        serviceCopy.textContent = data.message || "No service message was provided by the API.";
+        serviceMessage.classList.remove("is-normal", "is-alert");
+        const message = String(data.message || "").toLowerCase();
+        if (message.includes("normal") || message.includes("operating")) serviceMessage.classList.add("is-normal");
+        else if (message) serviceMessage.classList.add("is-alert");
+        lastUpdated.textContent = formatUpdatedTime(data.created);
+        setNetworkState("online", "Live arrivals");
+      }
+
+      async function loadForecast({ automatic = false } = {}) {
+        const id = stopSelect.value;
+        if (!id || !stopsById.has(id)) return;
+        if (isLoading && automatic) return;
+        if (activeController) activeController.abort();
+        activeController = new AbortController();
+        const thisRequest = ++requestNumber;
+        isLoading = true;
+        refreshButton.disabled = true;
+        refreshButton.classList.add("is-loading");
+        clearError();
+        setNetworkState("loading", "Updating arrivals");
+        directionGrid.innerHTML = '<div class="loading-box"><span class="loading-spinner"></span><strong>Checking the live Luas feed</strong><p>Fetching the next arrivals for this stop.</p></div>';
+
+        try {
+          const url = new URL(FORECAST_URL);
+          url.searchParams.set("stop", id);
+          const response = await fetch(url, {
+            method: "GET",
+            headers: { Accept: "application/json" },
+            cache: "no-store",
+            signal: activeController.signal,
+          });
+          if (!response.ok) throw new Error(`Forecast request failed with HTTP ${response.status}.`);
+          const data = await response.json();
+          if (thisRequest !== requestNumber) return;
+          if (data.stop && data.stop !== id) throw new Error("The API response was for a different stop.");
+          if (!Array.isArray(data.directions)) throw new Error("The API returned an unexpected forecast format.");
+          renderForecast(data);
+        } catch (error) {
+          if (error.name === "AbortError") return;
+          if (thisRequest !== requestNumber) return;
+          directionGrid.innerHTML = '<div class="empty-box"><strong>Arrivals could not be loaded</strong><p>Check the message above, then try refreshing.</p></div>';
+          serviceCopy.textContent = "Live service message unavailable.";
+          serviceMessage.classList.remove("is-normal", "is-alert");
+          lastUpdated.textContent = "Unavailable";
+          showError("Live arrivals unavailable", error.message || "The Luas forecast service could not be reached. Please try again.");
+        } finally {
+          if (thisRequest === requestNumber) {
+            isLoading = false;
+            refreshButton.disabled = false;
+            refreshButton.classList.remove("is-loading");
+          }
+        }
+      }
+
+      async function initialize() {
+        try {
+          setNetworkState("loading", "Loading stop list");
+          const response = await fetch(STOPS_URL, { headers: { Accept: "application/json" }, cache: "no-store" });
+          if (!response.ok) throw new Error(`Stop list request failed with HTTP ${response.status}.`);
+          const data = await response.json();
+          if (!Array.isArray(data.stops)) throw new Error("The stop-list response did not include a stops array.");
+          renderStops(data.stops);
+          await loadForecast();
+        } catch (error) {
+          stopSelect.disabled = true;
+          refreshButton.disabled = true;
+          directionGrid.innerHTML = '<div class="empty-box"><strong>Stop list unavailable</strong><p>Live arrivals cannot load until the stop list is reachable.</p></div>';
+          showError("Could not load Luas stops", error.message || "The official stop-list service could not be reached.");
+        }
+      }
+
+      stopSelect.addEventListener("change", () => {
+        updateStopDetails(stopSelect.value);
+        loadForecast();
+      });
+      document.querySelectorAll("[data-line-filter]").forEach(button => {
+        button.addEventListener("click", () => setLineFilter(button.dataset.lineFilter));
+      });
+      document.querySelectorAll("[data-direction-filter]").forEach(button => {
+        button.addEventListener("click", () => setDirectionFilter(button.dataset.directionFilter));
+      });
+      refreshButton.addEventListener("click", () => loadForecast());
+      initialize();
+      window.setInterval(() => {
+        if (document.visibilityState === "visible") loadForecast({ automatic: true });
+      }, REFRESH_MS);
+    })();
+  </script>
 </body>
 </html>
